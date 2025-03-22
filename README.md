@@ -1,6 +1,6 @@
 # Z80-Karte für Commodore C64
 
-Ich arbeite derzeit an einer Z80-Karte für den Commodore C64, um CP/M 2.2 verwenden zu können. Das Ganze basiert auf einem CPLD und einem 8 MHz Z80-Prozessor.
+Ich arbeite derzeit an einer Z80-Karte für den Commodore C64, um CP/M 2.2 verwenden zu können. Das Ganze basiert auf einem CPLD und einem 8 MHz Z80-Prozessor.
 
 ![](https://codeberg.org/diwou/Z80-Card_for_Commodore_C64/raw/branch/main/Images/Z80-Card_design_pcb.jpg)
 
@@ -8,9 +8,9 @@ Derzeit befindet sich das Projekt in der Beta-Phase. Ich würde die Stabilität 
 
 ## Beschreibung
 
-Basierend auf dem alten Commodore-CP/M-Modul habe ich den Z80-Prozessor direkt an den 8 MHz Dot-Clock des C64 angeschlossen.
+Basierend auf dem alten Commodore-CP/M-Modul habe ich den Z80-Prozessor direkt an den 8 MHz Dot-Clock des C64 angeschlossen.
 
-Allerdings arbeitet der Rest des C64, solange man den VIC nicht abschaltet, weiterhin nur mit 1 MHz, sodass der Zugriff auf RAM, Floppy usw. weiterhin in der Geschwindigkeit begrenzt ist.
+Allerdings arbeitet der Rest des C64, solange man den VIC nicht abschaltet, weiterhin nur mit 1 MHz, sodass der Zugriff auf RAM, Floppy usw. weiterhin in der Geschwindigkeit begrenzt ist.
 
 Ein großes Problem war die Kompatibilität mit dem ursprünglichen Modul. Ich habe die Z80-Karte in folgenden Boards getestet:
 
@@ -74,23 +74,29 @@ Im Internet lassen sich viele weitere CP/M-Programme und Tools finden.
 | 6   | 1      | U5                      | Exar           | SPX5205M5-L-3-3/TR                                        | LDO-Regler, 3.3V, 150mA, SOT-23                             |
 | 7   | 1      | CP1                     | Nichicon       | UMF1C470MDD1TP                                            | Elektrolyt-Kondensator, 47µF, 105°C                        |
 | 8   | 1      | U1                      | Xilinx         | XC95144XL-10TQ100C                                        | CPLD, 144 Macrocells, 10ns, 100 TQFP                        |
-| 9   | 1      | U2                      | Zilog          | Z084C0008PEG / Z0840008PEC / Z0840008PSC / Z8400HPS       | Z80 CPU, 8 MHz, DIP40, NMOS oder CMOS                      |
+| 9   | 1      | U2                      | Zilog          | Z084C0008PEG / Z0840008PEC / Z0840008PSC / Z8400HPS       | Z80 CPU, 8 MHz, DIP40, NMOS oder CMOS                      |
 
 ## Status
 
 ### Stand: 21. März 2021
 
-Firmware angepasst: Ab sofort werden auch CMOS-Varianten des Z80 unterstützt. Release V0.5 ist verfügbar.
+- Firmware angepasst: Ab sofort werden auch CMOS-Varianten des Z80 unterstützt.
+- Release V0.5 ist verfügbar.
 
----
+### Stand: 20. März 2021
 
-(Die weiteren Statusmeldungen und Historie kannst du bei Bedarf ebenfalls übersetzt bekommen, sie sind aktuell eher Entwicklungslog und können optional angehängt werden.)
+- Erste funktionierende Version erfolgreich in mehreren Geräten getestet.
+
+### Stand: 12. März 2021
+
+- Erste Platine bestückt und im C64 getestet.
 
 ## Lizenz
 
 Der Inhalt dieses Repositories (mit Ausnahme der Verzeichnisse "Docs" und "Software") steht unter folgender Lizenz:
 
-- **Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License (CC BY-NC-SA 4.0)**  
-  Der komplette Lizenztext befindet sich in der Datei [LICENSE.CC-NC-BY-SA-4.0](https://codeberg.org/diwou/Z80-Card_for_Commodore_C64/raw/branch/main/LICENSE.CC-NC-BY-SA)  
-  Und ist auch online verfügbar unter: https://creativecommons.org/licenses/by-nc-sa/4.0/
+**Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License (CC BY-NC-SA 4.0)**
 
+Der komplette Lizenztext befindet sich in der Datei [LICENSE.CC-NC-BY-SA-4.0](https://codeberg.org/diwou/Z80-Card_for_Commodore_C64/raw/branch/main/LICENSE.CC-NC-BY-SA)
+
+Und ist auch online verfügbar unter: https://creativecommons.org/licenses/by-nc-sa/4.0/
