@@ -62,41 +62,92 @@ Im Internet lassen sich viele weitere CP/M-Programme und Tools finden.
 
 ## Stückliste (BOM)
 
+Viele Teile werden für dieses Projekt nicht benötigt.
+
 **Seit Firmware-Version v0.5 werden auch CMOS-CPUs unterstützt.**
 
 | Nr. | Menge | Bezeichner              | Hersteller    | Hersteller-Teilenummer                                   | Beschreibung                                                  |
 |-----|--------|--------------------------|----------------|-----------------------------------------------------------|---------------------------------------------------------------|
-| 1   | 6      | FB1 - FB6                | Fair-Rite      | 2743005112                                                | Ferritperle axial, 91Ω @ 100MHz                            |
-| 2   | 6      | C2, C3, C10, C13, C14, C15| KEMET          | C315C100J3G5TA                                            | Keramik 10pF 25V C0G/NP0 radial                             |
-| 3   | 6      | C4, C5, C6, C7, C8, C9   | KEMET          | C0603C104J3RACTU                                          | SMD-Kondensator, 0.1µF, 25V, X7R, 0603                      |
-| 4   | 2      | C16, C17                | KEMET          | C0805C106K8RACTU                                          | SMD-Kondensator, 10µF, 10V, X7R, 0805                      |
-| 5   | 1      | C1                      | KEMET          | C320C104K5R5TA7305                                        | Keramik 100nF, 50V, THT, Raster 2.54mm                       |
-| 6   | 1      | U5                      | Exar           | SPX5205M5-L-3-3/TR                                        | LDO-Regler, 3.3V, 150mA, SOT-23                             |
-| 7   | 1      | CP1                     | Nichicon       | UMF1C470MDD1TP                                            | Elektrolyt-Kondensator, 47µF, 105°C                        |
-| 8   | 1      | U1                      | Xilinx         | XC95144XL-10TQ100C                                        | CPLD, 144 Macrocells, 10ns, 100 TQFP                        |
-| 9   | 1      | U2                      | Zilog          | Z084C0008PEG / Z0840008PEC / Z0840008PSC / Z8400HPS       | Z80 CPU, 8 MHz, DIP40, NMOS oder CMOS                      |
+| 1   | 6      | FB1 - FB6                | Fair-Rite      | 2743005112                                                | Ferritperle axial, 91 Ω @ 100 MHz                           |
+| 2   | 6      | C2, C3, C10, C13, C14, C15| KEMET          | C315C100J3G5TA                                            | Keramik-Kondensator, 10 pF, 25 V, C0G/NP0, radial             |
+| 3   | 6      | C4, C5, C6, C7, C8, C9   | KEMET          | C0603C104J3RACTU                                          | MLCC, 0,1 μF, 25 V, X7R, 0603 (1608 Metrisch), ±5 %           |
+| 4   | 2      | C16, C17                | KEMET          | C0805C106K8RACTU                                          | Keramik-Kondensator, 10 μF, 10 V, X7R, 0805                   |
+| 5   | 1      | C1                      | KEMET          | C320C104K5R5TA7305                                        | Keramikscheiben-Kondensator, 100 nF, -20 %~+80 %, 50 V, THT   |
+| 6   | 1      | U5                      | Exar           | SPX5205M5-L-3-3/TR                                        | LDO-Spannungsregler, 3,3 V, 0,15 A, 5-Pin SOT-23              |
+| 7   | 1      | CP1                     | Nichicon       | UMF1C470MDD1TP                                            | Aluminium-Elektrolytkondensator, 47 μF, 105 °C, bedrahtet     |
+| 8   | 1      | U1                      | Xilinx         | XC95144XL-10TQ100C                                        | CPLD, 144 Makrozellen, 10 ns, 100-TQFP                        |
+| 9   | 1      | U2                      | Zilog          | Z084C0008PEG / Z0840008PEC / Z0840008PSC / Z8400HPS       | Z80-CPU, 8 MHz, 40-DIP, NMOS oder CMOS                        |
 
 ## Status
 
 ### Stand: 21. März 2021
-
 - Firmware angepasst: Ab sofort werden auch CMOS-Varianten des Z80 unterstützt.
 - Release V0.5 ist verfügbar.
 
-### Stand: 20. März 2021
+### Stand: 17. März 2021
+- Beta-Testphase gestartet.
 
-- Erste funktionierende Version erfolgreich in mehreren Geräten getestet.
+### Stand: 16. März 2021
+- Beginn der offenen Beta-Phase. Version 0.3 veröffentlicht. Vorschläge und Fragen bitte ins Diskussionstool bei GitHub, Fehler in die Issues.
+- Neues Boarddesign mit CP/M-Schriftzug begonnen.
+- Interesse an Feedback zu getesteter Hardware und Aufbau.
+
+### Stand: 15. März 2021
+- Firmware erstmals in relativ stabilem Zustand. Erste Tests vielversprechend.
+
+![](https://codeberg.org/diwou/Z80-Card_for_Commodore_C64/raw/branch/main/Images/Z80-Card_first_alpha_release.jpg)
+
+- Tests mit alter 407-Platine, C64G mit 469er-Platine, DOS/SpeedDOS/JiffyDOS durchgeführt. Mit Speeder sehr gute Ergebnisse.
+- Z80 läuft mit Dot-Clock (8 MHz). Nur PAL getestet.
+- Turbo Pascal Mandelbrot-Benchmark zeigt spürbare Verbesserungen.
+
+![](https://codeberg.org/diwou/Z80-Card_for_Commodore_C64/raw/branch/main/Images/Z80-Card_Mandelbrot.jpg)
 
 ### Stand: 12. März 2021
+- Experiment mit unkonventionellen Platinenformen.
 
-- Erste Platine bestückt und im C64 getestet.
+![](https://codeberg.org/diwou/Z80-Card_for_Commodore_C64/raw/branch/main/Images/Z80-Card_design_pcb.jpg)
+
+### Stand: 6. März 2021
+- Erste reale Platine bestückt. Einige Komponenten nicht mehr erforderlich dank CPLD.
+- Entscheidung für 8 MHz-Version gefallen. 4 MHz unnötig langsam. Kein Konfigurationsaufwand für Nutzer nötig.
+- Grundlegende Stabilität erreicht. Waitstates werden noch optimiert.
+
+![](https://codeberg.org/diwou/Z80-Card_for_Commodore_C64/raw/branch/main/Images/z80-card-first_pcb.jpg)
+
+### Stand: 5. März 2021
+- 4 MHz-Modus weitgehend stabil. 8 MHz-Modus zu ca. 90 % funktional.
+- Mandelbrot-Vergleich: 4 MHz = 7:16 min, 8 MHz = 3:58 min.
+
+### Stand: 3. März 2021
+- Stabiler Lauf unter Last. Bootvorgang fehlerfrei.
+- Spontane Abstürze bei Inaktivität. Fehleranalyse läuft.
+- 8 MHz bringt kaum Ladezeit-Vorteil, aber bei CPU-lastigen Aufgaben klar schneller.
+
+### Stand: 22. Februar 2021
+- Erste Prototyp-Platine erstellt und bestellt. Ziel: Signalprobleme beheben, dann Takt erhöhen.
+- VIC nicht Hauptursache für CP/M-Probleme. Timingunterschiede zwischen TTL-Typen haben mehr Einfluss.
+
+![](https://codeberg.org/diwou/Z80-Card_for_Commodore_C64/raw/branch/main/Images/Z80-Card_PCB_Prototype.jpg)
+
+### Erster Eintrag
+- Erster Aufbau auf Breadboard mit CPLD und Devboard.
+- Verdrahtung per Lackdraht. Erste Tests bei 2 MHz erfolgreich.
+- Boot von CP/M 2.2 möglich, wenn auch instabil.
+- Funktioniert auch in neueren C64-Modellen – anders als das originale CP/M-Modul.
+
+![](https://codeberg.org/diwou/Z80-Card_for_Commodore_C64/raw/branch/main/Images/Z80-Card_first_prototype_1.jpg)
+
+![](https://codeberg.org/diwou/Z80-Card_for_Commodore_C64/raw/branch/main/Images/Z80-Card_first_prototype_2.jpg)
+
+![](https://codeberg.org/diwou/Z80-Card_for_Commodore_C64/raw/branch/main/Images/Z80-Card_first_prototype_3.jpg)
+
+---
 
 ## Lizenz
 
-Der Inhalt dieses Repositories (mit Ausnahme der Verzeichnisse "Docs" und "Software") steht unter folgender Lizenz:
+Der Inhalt dieses Repositories, mit Ausnahme der Verzeichnisse „Docs“ und „Software“, steht unter der folgenden Lizenz:
 
-**Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License (CC BY-NC-SA 4.0)**
-
-Der komplette Lizenztext befindet sich in der Datei [LICENSE.CC-NC-BY-SA-4.0](https://codeberg.org/diwou/Z80-Card_for_Commodore_C64/raw/branch/main/LICENSE.CC-NC-BY-SA)
-
+**Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License (CC BY-NC-SA 4.0)**  
+Der vollständige Lizenztext befindet sich in der Datei [LICENSE.CC-NC-BY-SA-4.0](https://codeberg.org/diwou/Z80-Card_for_Commodore_C64/raw/branch/main/LICENSE.CC-NC-BY-SA)  
 Und ist auch online verfügbar unter: https://creativecommons.org/licenses/by-nc-sa/4.0/
