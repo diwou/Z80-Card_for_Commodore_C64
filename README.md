@@ -1,271 +1,96 @@
-# Z80-Card for Commodore C64
+# Z80-Karte für Commodore C64
 
-I'm currently working on a Z80 card for the Commodore C64 to be able to use CP/M 2.2. The whole thing is based on a CPLD and a 8MHz Z80 processor.
+Ich arbeite derzeit an einer Z80-Karte für den Commodore C64, um CP/M 2.2 verwenden zu können. Das Ganze basiert auf einem CPLD und einem 8 MHz Z80-Prozessor.
 
 ![](https://codeberg.org/diwou/Z80-Card_for_Commodore_C64/raw/branch/main/Images/Z80-Card_design_pcb.jpg)
 
+Derzeit befindet sich das Projekt in der Beta-Phase. Ich würde die Stabilität zumindest auf den von mir getesteten Computern als ziemlich hoch einstufen.
 
+## Beschreibung
 
-Currently, the project is in beta phase. I would personally classify the stability as quite high, at least with the computers I tested.
+Basierend auf dem alten Commodore-CP/M-Modul habe ich den Z80-Prozessor direkt an den 8 MHz Dot-Clock des C64 angeschlossen.
 
-## Description
+Allerdings arbeitet der Rest des C64, solange man den VIC nicht abschaltet, weiterhin nur mit 1 MHz, sodass der Zugriff auf RAM, Floppy usw. weiterhin in der Geschwindigkeit begrenzt ist.
 
-Based on the old Commodore CP/M cartridge, I hooked the Z80 processor directly to the 8MHz dot clock of the C64. 
-
-However, at least if you don't switch off the VIC, the rest of the C64 still works with only 1MHZ, so the access to RAM, floppy drive, etc. is still limited in speed.
-
-A big other problem was the compatibility of the old original module. I have the following boards in which I could test my Z80 cartridge:
+Ein großes Problem war die Kompatibilität mit dem ursprünglichen Modul. Ich habe die Z80-Karte in folgenden Boards getestet:
 
 - ASSY-NO.250407 / ARTWORK-NO.251137 / REV.B
 - ASSY-NO.250407 / ARTWORK-NO.251137 / REV.C
 - ASSY-NO.250469 / PCB-NO.252311 / REV.4
 - ASSY-NO.250469 / PCB-NO.252311 / REV.B
-- SX-64 (I would have to unscrew it to check the revision)
+- SX-64 (Revision müsste noch geprüft werden)
 
-(All PAL models)
+(alle PAL-Modelle)
 
-I have changed the dependencies of the signals in some places, so that the VIC and the Z80 card should not get in each other's way. I also didn't use a counter for the waitstates, but determine in which cycle the Z80 is currently and then set the corresponding waitstates depending on the VIC. 
+Ich habe an einigen Stellen die Signalabhängigkeiten geändert, sodass sich VIC und Z80-Karte nicht in die Quere kommen. Außerdem verwende ich keinen Zähler für die Waitstates, sondern bestimme, in welchem Zyklus sich der Z80 aktuell befindet, und setze dann abhängig vom VIC die entsprechenden Waitstates.
 
-This has increased the stability enormously. Also now the version/revision of the VIC seems to play no role. At least I couldn't find any difference in the stability of my different versions.
+Das hat die Stabilität enorm verbessert. Auch scheint nun die Version des VIC keine Rolle mehr zu spielen. Ich konnte zumindest keine Unterschiede in der Stabilität bei verschiedenen Versionen feststellen.
 
+## Zusammenbau
 
+Beim Zusammenbau gibt es eigentlich nicht viel zu beachten. Zuerst sollte das Xilinx-CPLD verlötet werden. Danach der Spannungsregler, gefolgt von den SMD-Kondensatoren.
 
-## Assembly
+Die restlichen Bauteile werden von klein nach groß bestückt. Also erst die Kondensatoren, dann die Ferritperlen, danach der 40-polige IC-Sockel. Zum Schluss der Elektrolytkondensator. Diesen am besten liegend montieren, da er vergleichsweise hoch ist und leicht abbrechen könnte.
 
+## Firmware flashen
 
+Die Firmware liegt als JED-Datei vor und kann mit einem JTAG-Programmieradapter geflasht werden.
 
-There is actually not much to consider when assembling. First I would solder the XIlinx CPLD. Then the voltage regulator, followed by the SMD capacitors.
+Am einfachsten funktioniert dies mit dem Tool "xc3sprog" und einem kleinen FT232H-Adapterboard. Solche Boards gibt es sehr günstig.
 
-The rest of the other parts can then be applied from small to large. So the capacitors first, then the ferrite beads and then the 40 pin IC socket. At the end then the electrolytic capacitor. It is probably more practical to mount it horizontally, because it is comparatively high and could be torn off quickly.
+Eine sehr gut beschriebene Anleitung dazu findet sich hier:
+https://github.com/1c3d1v3r/neatPLA/tree/master/programming
 
-
-
-## Flash firmware
-
-The firmware is available as JED file. This can be flashed with a JTAG programming adapter.
-
-The easiest way is to use the tool "xc3sprog" and a small FT232H adapter board. You can get the latter for a small amount of money.
-
-A very well described tutorial how to do this can be found here: https://github.com/1c3d1v3r/neatPLA/tree/master/programming
-
-The pinout of the JTAG connector of my board is on the backside.
+Die Pinbelegung des JTAG-Anschlusses befindet sich auf der Rückseite der Platine:
 
 ![](https://codeberg.org/diwou/Z80-Card_for_Commodore_C64/raw/branch/main/Images/Z80-Card_JTAG.jpg)
 
+Ich würde hier keinen Header anlöten. Für das kurze Flashen reicht es aus, die kleinen Dupont-Stecker des FT232H-Boards leicht schräg in die Lötpads zu stecken und zu halten.
 
+Nach dem Flashen ist die Karte einsatzbereit.
 
-I would not solder a male or female header here. For the short flash process it is sufficient to simply insert the small Dupont connectors of the FT232H board into the solder contacts and hold them slightly tilted.
+## CP/M-Diskette
 
-Once the firmware has been installed, the cartridge is ready for use.
+Meine Z80-Karte verwendet die gleiche CP/M-Systemdiskette wie das originale Commodore-Modul. Ein D64-Image der Standard-Systemdiskette befindet sich im Repository.
 
+Weitere Diskettenabbilder (mit Wordstar, Turbo Pascal, Zork etc.) gibt es unter:
+http://biosrhythm.com/?p=1220
 
+Dort ist auch eine Software-Emulation für 80 Zeichen integriert. Diese ersetzt zwar keine echte 80-Zeichen-Karte, ist aber angenehmer als die 40-Zeichen-Ausgabe des C64.
 
-## CP/M Disk
+Im Internet lassen sich viele weitere CP/M-Programme und Tools finden.
 
-My Z80 cartridge uses the same CP/M system disk as the original module from Commodore. I have a D64 image of the standard system disk in the repository.
+## Stückliste (BOM)
 
-Otherwise, http://biosrhythm.com/?p=1220 is a good place to go for more disk images, which include Wordstar, Turbo Pascal, Zork and some other CP/M programs.
+**Seit Firmware-Version v0.5 werden auch CMOS-CPUs unterstützt.**
 
-On these images a software emulation for 80 characters is also integrated. This does not replace a real 80 character card as hardware, but it is much more fun than with the standard 40 characters of the C64.
+| Nr. | Menge | Bezeichner              | Hersteller    | Hersteller-Teilenummer                                   | Beschreibung                                                  |
+|-----|--------|--------------------------|----------------|-----------------------------------------------------------|---------------------------------------------------------------|
+| 1   | 6      | FB1 - FB6                | Fair-Rite      | 2743005112                                                | Ferritperle axial, 91Ω @ 100MHz                            |
+| 2   | 6      | C2, C3, C10, C13, C14, C15| KEMET          | C315C100J3G5TA                                            | Keramik 10pF 25V C0G/NP0 radial                             |
+| 3   | 6      | C4, C5, C6, C7, C8, C9   | KEMET          | C0603C104J3RACTU                                          | SMD-Kondensator, 0.1µF, 25V, X7R, 0603                      |
+| 4   | 2      | C16, C17                | KEMET          | C0805C106K8RACTU                                          | SMD-Kondensator, 10µF, 10V, X7R, 0805                      |
+| 5   | 1      | C1                      | KEMET          | C320C104K5R5TA7305                                        | Keramik 100nF, 50V, THT, Raster 2.54mm                       |
+| 6   | 1      | U5                      | Exar           | SPX5205M5-L-3-3/TR                                        | LDO-Regler, 3.3V, 150mA, SOT-23                             |
+| 7   | 1      | CP1                     | Nichicon       | UMF1C470MDD1TP                                            | Elektrolyt-Kondensator, 47µF, 105°C                        |
+| 8   | 1      | U1                      | Xilinx         | XC95144XL-10TQ100C                                        | CPLD, 144 Macrocells, 10ns, 100 TQFP                        |
+| 9   | 1      | U2                      | Zilog          | Z084C0008PEG / Z0840008PEC / Z0840008PSC / Z8400HPS       | Z80 CPU, 8 MHz, DIP40, NMOS oder CMOS                      |
 
-But you can find some other tools and programs on the internet. 
+## Status
 
+### Stand: 21. März 2021
 
+Firmware angepasst: Ab sofort werden auch CMOS-Varianten des Z80 unterstützt. Release V0.5 ist verfügbar.
 
-## Parts list
+---
 
-Many parts are not needed for this project.
+(Die weiteren Statusmeldungen und Historie kannst du bei Bedarf ebenfalls übersetzt bekommen, sie sind aktuell eher Entwicklungslog und können optional angehängt werden.)
 
-**As of firmware release v0.5 CMOS CPUs are now also supported.** 
+## Lizenz
 
-| #    | Quantity | Designator                 | Manufacturer | Manufacturer Part Number                               | Description                                                  |
-| ---- | -------- | -------------------------- | ------------ | ------------------------------------------------------ | ------------------------------------------------------------ |
-| 1    | 6        | FB1 - FB6                  | Fair-Rite    | 2743005112                                             | Ferrite Beads  Axial 91Ohm 100MHz T/R                        |
-| 2    | 6        | C2, C3, C10, C13, C14, C15 | KEMET        | C315C100J3G5TA                                         | CAP  CER 10PF 25V C0G/NP0 RADIAL                             |
-| 3    | 6        | C4, C5, C6, C7, C8, C9     | KEMET        | C0603C104J3RACTU                                       | KEMET     C0603C104J3RACTU       SMD Multilayer Ceramic  Capacitor, 0603 [1608 Metric], 0.1 F, 25 V,   5%, X7R, C Series |
-| 4    | 2        | C16, C17                   | KEMET        | C0805C106K8RACTU                                       | KEMET  - C0805C106K8RACTU - CAP, 10µF, 10V, 10%, X7R, 0805   |
-| 5    | 1        | C1                         | KEMET        | C320C104K5R5TA7305                                     | Ceramic Disc  Capacitors 100nF -20%~+80% 50V Through Hole,P=2.54mm RoHS |
-| 6    | 1        | U5                         | Exar         | SPX5205M5-L-3-3/TR                                     | LDO Regulator  Pos 3.3V 0.15A 5-Pin SOT-23 T/R               |
-| 7    | 1        | CP1                        | Nichicon     | UMF1C470MDD1TP                                         | Aluminum  Electrolytic Capacitors - Leaded 47uF 105c         |
-| 8    | 1        | U1                         | Xilinx       | XC95144XL-10TQ100C                                     | IC CPLD 144MC  10NS 100TQFP                                  |
-| 9    | 1        | U2                         | Zilog        | Z084C0008PEG or Z0840008PEC or Z0840008PSC or Z8400HPS | IC  CPU Z80 8MHZ 40DIP NMOS or CMOS                          |
+Der Inhalt dieses Repositories (mit Ausnahme der Verzeichnisse "Docs" und "Software") steht unter folgender Lizenz:
 
+- **Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License (CC BY-NC-SA 4.0)**  
+  Der komplette Lizenztext befindet sich in der Datei [LICENSE.CC-NC-BY-SA-4.0](https://codeberg.org/diwou/Z80-Card_for_Commodore_C64/raw/branch/main/LICENSE.CC-NC-BY-SA)  
+  Und ist auch online verfügbar unter: https://creativecommons.org/licenses/by-nc-sa/4.0/
 
-
-# Status
-
-### Status as of 21 March 2021
-
-I have adapted the firmware accordingly, so that now also the CMOS variants of the Z80 can be used. The current release V0.5 supports CMOS and NMOS Z80 CPUs.
-
-
-
-------
-
-### Old entries
-
-### Status as of 17 March 2021
-
-Beta test phase started.
-
-
-
-### Status as of 16 March 2021
-
-I have decided to start an open beta phase. I have published everything necessary to build the map. Currently the version is 0.3. 
-
-There is a kind of discussion board at GitHub by now. You can find it in the menu bar at the top of this project.
-
-Perhaps this could be used for suggestions and questions, while the Issues section is reserved for bug reports.
-
-For this board I had the fun to work a little bit on the design and to add the lettering CP/M to the board. 
-
-I would be interested if others like this or if I should make a "normal" board without any embellishments. 
-
-I would be particularly interested to know on which hardware you test. So which board, revision, kernal, any conversions, etc.? The more feedback, the better. 
-
-
-
-### Status as of 15 March 2021
-
-Today I made a small breakthrough. I now have the firmware in a fairly stable state. First tests look very good so far. 
-
-
-
-![](https://codeberg.org/diwou/Z80-Card_for_Commodore_C64/raw/branch/main/Images/Z80-Card_first_alpha_release.jpg)
-
-
-
-I have tested so far in an old 407 board, as well as a C64G with 469 board. Also with original DOS, SpeedDOS and JiffyDOS. With the original DOS it is not so much fun, because the loading is very slow, but with a floppy speeder it works very well.
-
-The Z80 runs with the DOT CLK frequency of the C64, which is about 8MHz. So far I have only tested on PAL machines (I don't have an NTSC version). Theoretically this shouldn't make any difference, at least I hope so.
-
-For testing I have mainly used a small Pascal program which calculates the Mandelbrot set. I compiled this with Turbo Pascal 3.01 under CP/M:
-
-By the way, you can see a clear difference between the original Commodore module and my version. 
-
-
-
-![](https://codeberg.org/diwou/Z80-Card_for_Commodore_C64/raw/branch/main/Images/Z80-Card_Mandelbrot.jpg)
-
-
-
-I think sooner or later we will do a first beta test...
-
-
-
-### Status as of 12 March 2021
-
-Since I've always wanted to experiment with more unusual PCB outlines, I tried my hand at something like this:
-
-
-
-![](https://codeberg.org/diwou/Z80-Card_for_Commodore_C64/raw/branch/main/Images/Z80-Card_design_pcb.jpg)
-
-
-
-Is there any interest in something like this? So that on circuit boards so small gags are attached? 
-
-
-
-### Status as of 06 March 2021
-
-Today I built the whole thing on a real board.
-
-![](https://codeberg.org/diwou/Z80-Card_for_Commodore_C64/raw/branch/main/Images/z80-card-first_pcb.jpg)
-
-
-
-Don't be surprised that there are still unpopulated components. They are no longer needed. Everything is now in the CPLD.
-
-Yesterday I was still thinking whether the 8MHz mode makes sense at all. Today I ask myself, why I still tinker at the 4MHz mode or if necessary install both.
-
-Is actually nonsense. The 8MHz mode doesn't speed up the load times and access to the RAM in the C64 (because of the bottleneck expansion port and RAM), but as far as pure CPU work is concerned, the whole thing is much faster.
-
-And whether 4MHz or 8MHz, the CP/M version doesn't change. Also the user must consider there nothing or configure.
-
-Therefore I will stop the work on the 4MHz version and concentrate on the 8MHz version.
-
-The current status looks like that, that everything works so far. Also actually quite stable. Very rarely the boot does not work directly at the first time. 
-
-Currently I still have the problem that he sometimes messes with the waitstates. I still have to work on the routine. But the rest looks so far already quite good.
-
-
-
-### Status as of 05 March 2021
-
-Meanwhile the 4MHz mode runs quite stable. Now and then it hangs when booting. However, the boards have not arrived yet, so I am still testing on my breadboard model.
-
-The 8MHz mode I would see times so 90%. There are still some minor problems here and there. But basically it works.
-
-Today I compiled an old Pascal program for the Mandelbrot set and ran it on 4MHZ and 8MHz. 
-
-While you don't feel any difference when loading programs (booting takes 9-10 seconds with JiffyDOS at 4, as well as 8MHz) there are differences in mathematical calculations.
-
-With the 4MHz version, a run takes just under 7 minutes and 16 seconds (measured with the smartphone). In the 8MHz mode, it then only took 3 minutes and 58 seconds. 
-
-I'll see if I can install both modes, possibly with DIP switch switchable or so.
-
-
-
-### Status as of 03 March 2021
-
-In the meantime the whole thing runs quite stable, at least as long as it is worked with. I have now provided an additional 50MHz oscillator to make the cycling more accurate.
-
-The boot process seems to be stable, at least I couldn't detect any problems there so far.
-
-As long as you work with the CP/M, there seems to be no more problems.
-
-Only if the CP/M has nothing to do, then it crashes abruptly sometimes. Unfortunately not predictable, concerning the time. This makes the search a bit more difficult. But I am in good hope to find this bug as well.
-
-First attempts with the 8MHZ mode look quite successful, but a real speed increase in normal operation is not felt. The main problem is that the communication with the C64 (i.e. RAM, floppy, etc) is still subject to the C64 conventions. The Z80 therefore has to wait most of the time.
-
-Currently the whole thing runs at 4MHz, just like the original module. If you use SpeedDOS, JiffyDOS or a comparable floppy speeder, the loading times are quite bearable.
-
-
-
-### Status as of 22 February 2021
-
-For now, I have developed and ordered a circuit board. With it I hope to get the signal problems under control. After that I can continue with the CPLD code development.
-
-![](https://codeberg.org/diwou/Z80-Card_for_Commodore_C64/raw/branch/main/Images/Z80-Card_PCB_Prototype.jpg)
-
-Then, when the card is running stable, the next step is tuning. The goal should be to run the card at a higher clock rate. The Z80 CPU could run 8MHZ. Let's see if this can be implemented cleanly. 
-
-Since the C64 doesn't have the cleanest timing, and this differs slightly from model to model, it's not so easy to find a happy medium.
-
-By the way, I cannot confirm the assumption that the problems with CP/M are due to the VIC. I have tried various VICs in a 407 board and always got an original Commodore CP/M cartridge running.
-
-Also I have by exchange of different TTL components against other types (S or LS against ALS or HCT, etc.) in the Cartridge the module even in a 469er board to run brought. Even the manufacturer of the respective component has a partial influence on it. 
-
-But which VIC was in use, apparently played no role. It seems to be rather minimal timing differences that play a role, but they are extremely tiny.
-
-
-
-### First Entry
-
-I have already created a first prototype on a breadboard with a CPLD. I put a small DevBoard piggyback on the breadboard. I soldered the whole thing with enamelled copper wire.
-
-![](https://codeberg.org/diwou/Z80-Card_for_Commodore_C64/raw/branch/main/Images/Z80-Card_first_prototype_1.jpg)
-
-
-
-![](https://codeberg.org/diwou/Z80-Card_for_Commodore_C64/raw/branch/main/Images/Z80-Card_first_prototype_2.jpg)
-
-
-
-The whole thing is unfortunately not perfect and of course I have some signal problems because of the "flying wiring". But at least I could run the board with 2MHz. It doesn't run perfectly yet and I still have to work on some timings.
-
-But an original Commodore CP/M 2.2 can be booted. And it works so far, even if not quite stable yet. But it even runs in newer Commodore models, which is not possible with the old original CP/M cartridge from Commodore.
-
-![](https://codeberg.org/diwou/Z80-Card_for_Commodore_C64/raw/branch/main/Images/Z80-Card_first_prototype_3.jpg)
-
-------
-
-
-
-# License
-
-The contents of this repository, with the exception of the Docs and Software directories, are released under the following license:
-
-- the "Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License" (CC BY-NC-SA 4.0) full text of this license is included in the [LICENSE.CC-NC-BY-SA-4.0](https://codeberg.org/diwou/Z80-Card_for_Commodore_C64/raw/branch/main/LICENSE.CC-NC-BY-SA) file and a copy can also be found at https://creativecommons.org/licenses/by-nc-sa/4.0/
